@@ -27,6 +27,9 @@ conservative: ambiguity is reported, not silently resolved.
 
 - Complete, page-preserving text extraction through Zotero's installed PDF.js.
 - Reader-compatible searchable text, including synthetic spacing and UTF-16 mapping.
+- Evidence-grounded Paper Model reconstruction before annotation planning.
+- Separate full-paper coverage, semantic understanding, and annotation-information gates.
+- Required/useful/background Paper Model priorities and required-node coverage diagnostics.
 - Exact-text lookup with context disambiguation, multi-line rectangles, and native sort order.
 - Native Zotero highlights through the installed local JavaScript bridge.
 - Four evidence categories with Chinese comments, tags, and stable colors.
@@ -41,16 +44,40 @@ conservative: ambiguity is reported, not silently resolved.
 ```mermaid
 flowchart LR
     A[Codex request] --> B[Full-paper extraction]
-    B --> C[Evidence plan + coverage]
-    C --> D{Coverage gate}
-    D -- blocked --> E[Report reasons]
-    D -- passed --> F[Exact-text locator]
-    F --> G{Unique match?}
-    G -- no --> H[Report ambiguity/not found]
-    G -- yes --> I[Native geometry + sortIndex]
-    I --> J[Zotero save path]
-    J --> K[Audit summary]
+    B --> C[Section observations]
+    C --> D[Global Paper Model]
+    D --> E[Workflow synthesis + evidence grounding]
+    E --> F[Required/useful/background classification]
+    F --> G[Paper Model node coverage]
+    G --> H{Coverage + understanding + annotation gates}
+    H -- blocked --> I[Report reasons]
+    H -- passed --> J[Exact-text locator]
+    J --> K{Unique match?}
+    K -- no --> L[Report ambiguity/not found]
+    K -- yes --> M[Native geometry + sortIndex]
+    M --> N[Zotero save path]
+    N --> O[Audit summary]
 ```
+
+The four annotation categories are an output layer, not the first-stage
+reasoning target. The Skill does not classify a passage merely because it
+contains words such as `purpose`, `method`, `propose`, or `result`. It first
+reconstructs the paper's problem, gap, objective, data, substantive workflow,
+evaluation, results, contribution, and limitations. `coverageComplete` proves
+that usable pages were inspected; `understandingComplete` proves that the
+research logic was reconstructed; `annotationCoverageComplete` proves that
+the final annotations preserve every required Paper Model node (or an explicit
+no-annotation-worthy exception). All three are required before a native write.
+
+Annotation completeness is measured against required Paper Model nodes, not
+against category presence, four-color presence, a fixed top-N, or a universal
+annotation count. The colors are organizational labels, not annotation quotas.
+The Skill selects a minimum sufficient, non-redundant evidence set: required
+nodes are covered first, useful evidence is retained only when it materially
+improves reconstruction, and background comprehension evidence does not force
+a highlight. A paper may legitimately pass with five or fewer annotations when
+its required nodes are covered; a complex paper must not pass merely because
+each category has one or two entries.
 
 The implementation map is documented in [How it works](docs/how-it-works.md) and
 the trade-offs are recorded in [Design decisions](docs/design-decisions.md).
@@ -120,8 +147,9 @@ node src/annotate.mjs --plan analysis.json --apply --note
 ```
 
 The dry run never writes. The apply path re-extracts the PDF, checks coverage,
-locates every quote, refuses unresolved ambiguity, and only then calls the
-native Zotero writer.
+checks the Paper Model and understanding gate, checks required-node annotation
+coverage, locates every quote, refuses unresolved ambiguity, and only then
+calls the native Zotero writer.
 
 For collections:
 
@@ -145,6 +173,57 @@ Audit records contain counts and statuses, not full PDF text.
     "sectionsSeen": ["Abstract", "1 Introduction", "Methods", "Results"],
     "abstractPageIndices": [0]
   },
+  "section_observations": [
+    {
+      "section": "Methods",
+      "page_indices": [5],
+      "observations": [
+        {
+          "type": "method_step_candidate",
+          "summary": "The input is segmented before vectorization.",
+          "exact_quote": "direct source text",
+          "page": 5
+        }
+      ]
+    }
+  ],
+  "paper_model": {
+    "research_type": "methodological",
+    "research_context": {"summary": "...", "annotation_priority": "background", "evidence_refs": []},
+    "core_problem": {"summary": "...", "annotation_priority": "required", "evidence_refs": []},
+    "existing_approaches": [],
+    "research_gap": [{"gap": "...", "why_it_matters": "...", "annotation_priority": "required", "evidence_refs": []}],
+    "research_objective": {"summary": "...", "annotation_priority": "required", "evidence_refs": []},
+    "research_questions_or_hypotheses": [],
+    "data": [],
+    "method_pipeline": [],
+    "experimental_design": {"summary": "...", "evidence_refs": []},
+    "evaluation": {"metrics": [], "baselines_or_comparisons": [], "validation_strategy": "...", "evidence_refs": []},
+    "key_results": [{"result": "...", "what_it_demonstrates": "...", "annotation_priority": "required", "evidence_refs": []}],
+    "contributions": [{"contribution": "...", "annotation_priority": "required", "evidence_refs": []}],
+    "limitations": [{"limitation": "...", "annotation_priority": "required", "evidence_refs": []}],
+    "cross_section_relations": [],
+    "end_to_end_story": {"summary": "...", "evidence_refs": []}
+  },
+  "understanding": {
+    "paperModelBuilt": true,
+    "core_problem": true,
+    "research_gap": true,
+    "objective": true,
+    "data_or_input": true,
+    "workflow_reconstructed": true,
+    "evaluation_understood": true,
+    "results_connected_to_claims": true,
+    "contribution_identified": true,
+    "limitations_identified": true,
+    "understandingComplete": true
+  },
+  "annotation_coverage": {
+    "nodes": {
+      "core_problem": {"status": "covered", "annotation_indices": [0]},
+      "method_pipeline.0": {"status": "covered", "annotation_indices": [1, 2]}
+    }
+  },
   "research_purpose": [
     {
       "exact_quote": "direct body evidence",
@@ -152,7 +231,9 @@ Audit records contain counts and statuses, not full PDF text.
       "context_after": "optional following text",
       "summary_zh": "中文摘要",
       "source_page": 1,
-      "source_section": "1 Introduction"
+      "source_section": "1 Introduction",
+      "paper_model_refs": ["research_objective"],
+      "semantic_role": "objective_evidence"
     }
   ],
   "research_gap": [],
@@ -163,6 +244,23 @@ Audit records contain counts and statuses, not full PDF text.
 
 Quotes must be copied from the paper. Context is used to disambiguate a match
 but is not highlighted unless it is included in `exact_quote`.
+
+Every substantive Paper Model node must explicitly carry
+`annotation_priority: required | useful | background`; priority is assigned
+from the node's function in the reconstructed research logic, never from a
+keyword. Every required node must either be referenced by a final annotation
+or have an explicit `no_annotation_worthy_evidence` record with a reason.
+`paper_model_refs` may contain multiple nodes when one continuous passage
+genuinely explains them together. `annotationCoverageComplete` is computed
+from these node mappings, not trusted from an annotation count.
+
+For methodological papers, every method annotation should point to one or more
+concrete `method_pipeline.N`/`method_pipeline.step_N` nodes and explain the
+stage's functional role. Generic signposts such as “we propose a novel method”
+should be replaced by specific data, transformation, evaluation, or result
+evidence when the paper provides it. Optional child notes are generated from
+the same Paper Model and therefore contain the reconstructed research process,
+not a second independent analysis.
 
 ## Safety, privacy, and limitations
 

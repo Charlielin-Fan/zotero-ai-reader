@@ -2,7 +2,9 @@ const ABSTRACT_SECTION = /\babstract\b/i;
 
 function annotationsFromPlan(plan) {
   if (Array.isArray(plan?.annotations)) return plan.annotations;
-  const source = plan?.analysis && typeof plan.analysis === "object" ? plan.analysis : plan;
+  const source = plan?.annotation_plan && typeof plan.annotation_plan === "object"
+    ? plan.annotation_plan
+    : plan?.analysis && typeof plan.analysis === "object" ? plan.analysis : plan;
   return [
     "research_purpose",
     "research_gap",
@@ -166,6 +168,7 @@ export function sourcePageMismatches(annotations, locations) {
     if (expected == null || location?.status !== "unique") continue;
     if (location.pageIndex !== expected) {
       mismatches.push({
+        index,
         exactQuote: annotation.exactQuote,
         expectedSourcePage: expected,
         locatedPageIndex: location.pageIndex,

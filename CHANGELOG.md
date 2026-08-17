@@ -3,6 +3,17 @@
 All notable public changes are recorded here. The format follows the spirit of
 Keep a Changelog; releases use semantic version labels.
 
+## [Unreleased]
+
+### Added
+
+- Evidence-grounded Paper Model reconstruction and provisional section observations.
+- Separate Understanding Gate alongside the existing full-paper coverage gate.
+- Cross-section synthesis checks, substantive method-pipeline validation, and
+  semantic roles for every planned annotation.
+- Structured child notes generated from the Paper Model and semantic-workflow
+  tests for shallow keyword false positives.
+
 ## [0.1.0] - 2026-08-17
 
 ### Added
