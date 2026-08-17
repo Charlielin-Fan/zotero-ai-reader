@@ -1,10 +1,15 @@
-# Zotero AI Reader v0.1.0
+# Zotero AI Reader v0.2.0
 
 Zotero AI Reader is a local-first Codex skill for complete-paper evidence
 annotation in Zotero.
 
 ## Highlights
 
+- Reconstructs an evidence-grounded Paper Model before annotation planning.
+- Adds separate Understanding and Annotation Coverage Gates for required
+  method, result, and limitation evidence.
+- Validates semantic roles, cross-section synthesis, method pipelines, and
+  source-page coverage before any native write.
 - Reads every usable PDF page before an apply run.
 - Maps exact quotes through Zotero's installed PDF.js text and geometry semantics.
 - Reports ambiguity instead of silently choosing the first repeated match.
@@ -35,7 +40,7 @@ versions other than `9.0.6` remain unsupported or `[UNVERIFIED]`.
 
 ## Downloads
 
-- `zotero-ai-reader-v0.1.0.zip` — clean public source archive.
+- GitHub source archives for tag `v0.2.0` will contain the clean public source.
 - `SHA256SUMS.txt` — checksum for the archive.
 
 The accompanying Xiaohongshu material is a package only; no post is published by

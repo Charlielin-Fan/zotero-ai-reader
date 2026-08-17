@@ -1,6 +1,6 @@
 # How it works
 
-This document describes the public implementation at release `v0.1.0`. The
+This document describes the public implementation at release `v0.2.0`. The
 project deliberately keeps the PDF reader and native writer as separate stages
 so a read-only preview can be inspected before a library mutation.
 
