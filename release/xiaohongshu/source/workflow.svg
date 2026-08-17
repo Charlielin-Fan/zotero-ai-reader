@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Zotero AI Reader workflow</title>
+  <desc id="desc">Four synthetic stages from inspect to verify.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#171329"/><stop offset="1" stop-color="#342f70"/></linearGradient><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#f2c671"/></marker></defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <text x="100" y="115" fill="#fff" font-family="Arial, sans-serif" font-size="50" font-weight="700">A safe annotation workflow</text>
+  <text x="100" y="165" fill="#c9c6ee" font-family="Arial, sans-serif" font-size="25">inspect → plan → locate → verify</text>
+  <g font-family="Arial, sans-serif" stroke="#f2c671" stroke-width="2"><circle cx="230" cy="450" r="125" fill="#2c2861"/><circle cx="590" cy="450" r="125" fill="#254e5b"/><circle cx="950" cy="450" r="125" fill="#4b3067"/><circle cx="1310" cy="450" r="125" fill="#5a4529"/></g>
+  <g font-family="Arial, sans-serif" text-anchor="middle"><text x="230" y="430" fill="#fff" font-size="28" font-weight="700">INSPECT</text><text x="230" y="475" fill="#d7d4ff" font-size="19">read all usable pages</text><text x="590" y="430" fill="#fff" font-size="28" font-weight="700">PLAN</text><text x="590" y="475" fill="#c9fff4" font-size="19">keep quote + context</text><text x="950" y="430" fill="#fff" font-size="28" font-weight="700">LOCATE</text><text x="950" y="475" fill="#f0d8ff" font-size="19">resolve geometry</text><text x="1310" y="430" fill="#fff" font-size="28" font-weight="700">VERIFY</text><text x="1310" y="475" fill="#fff0c5" font-size="19">review before write</text></g>
+  <g stroke="#f2c671" stroke-width="4" fill="none" marker-end="url(#arrow)"><path d="M365 450 H455"/><path d="M725 450 H815"/><path d="M1085 450 H1175"/></g>
+  <text x="100" y="760" fill="#ddd8ff" font-family="Arial, sans-serif" font-size="23">Repeated matches stop for human review; no first-result guessing.</text>
+</svg>

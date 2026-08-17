@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Zotero AI Reader architecture</title>
+  <desc id="desc">A synthetic diagram showing extraction, coverage, locating, and native annotation save.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0b1020"/><stop offset="1" stop-color="#182a58"/></linearGradient>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#8ea8ff"/></marker>
+    <filter id="shadow"><feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000" flood-opacity=".22"/></filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1390" cy="120" r="220" fill="#4c65ff" opacity=".12"/>
+  <circle cx="170" cy="790" r="300" fill="#39d4b7" opacity=".08"/>
+  <text x="100" y="120" fill="#ffffff" font-family="Arial, sans-serif" font-size="52" font-weight="700">Zotero AI Reader</text>
+  <text x="100" y="170" fill="#aab9e7" font-family="Arial, sans-serif" font-size="25">synthetic release architecture</text>
+  <g filter="url(#shadow)" font-family="Arial, sans-serif">
+    <g transform="translate(100 300)"><rect width="260" height="190" rx="24" fill="#223568" stroke="#7d96ff" stroke-width="2"/><text x="30" y="60" fill="#9fb4ff" font-size="20">01</text><text x="30" y="106" fill="#fff" font-size="30" font-weight="700">Extract</text><text x="30" y="145" fill="#cdd8ff" font-size="19">whole text layer</text></g>
+    <g transform="translate(470 300)"><rect width="260" height="190" rx="24" fill="#1a4d5b" stroke="#57d9bf" stroke-width="2"/><text x="30" y="60" fill="#84ead5" font-size="20">02</text><text x="30" y="106" fill="#fff" font-size="30" font-weight="700">Cover</text><text x="30" y="145" fill="#c9fff4" font-size="19">coverage gate</text></g>
+    <g transform="translate(840 300)"><rect width="260" height="190" rx="24" fill="#503e67" stroke="#db9cff" stroke-width="2"/><text x="30" y="60" fill="#e9baff" font-size="20">03</text><text x="30" y="106" fill="#fff" font-size="30" font-weight="700">Locate</text><text x="30" y="145" fill="#f1dcff" font-size="19">quote → geometry</text></g>
+    <g transform="translate(1210 300)"><rect width="260" height="190" rx="24" fill="#5e492a" stroke="#ffd27a" stroke-width="2"/><text x="30" y="60" fill="#ffe09f" font-size="20">04</text><text x="30" y="106" fill="#fff" font-size="30" font-weight="700">Save</text><text x="30" y="145" fill="#fff1c8" font-size="19">native Zotero path</text></g>
+  </g>
+  <g stroke="#8ea8ff" stroke-width="4" fill="none" marker-end="url(#arrow)"><path d="M365 395 H455"/><path d="M735 395 H825"/><path d="M1105 395 H1195"/></g>
+  <text x="100" y="690" fill="#d9e3ff" font-family="Arial, sans-serif" font-size="24">Ambiguity is reported · library writes are gated · no GUI automation</text>
+</svg>

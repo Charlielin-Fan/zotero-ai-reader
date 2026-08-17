@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>Zotero AI Reader · synthetic Xiaohongshu storyboard</title>
+  <style>
+    :root { --navy:#0b1020; --indigo:#263b73; --mint:#57d9bf; --green:#5fb236; --gold:#f2c671; --ink:#f7f9ff; }
+    body { margin:0; background:#10182c; color:var(--ink); font-family:Arial,"Microsoft YaHei",sans-serif; }
+    main { width:1080px; margin:0 auto; }
+    .card { width:1080px; height:1440px; box-sizing:border-box; padding:92px; position:relative; overflow:hidden; background:linear-gradient(135deg,var(--navy),#293d77); }
+    .card:nth-child(even) { background:linear-gradient(135deg,#152c3b,#4b3067); }
+    h1 { font-size:70px; line-height:1.08; margin:0 0 38px; letter-spacing:-2px; }
+    h2 { font-size:42px; margin:0 0 30px; }
+    p,li { font-size:28px; line-height:1.55; color:#dce5ff; }
+    .pill { display:inline-block; padding:12px 22px; border-radius:99px; border:2px solid var(--mint); color:#b9fff0; font-size:24px; }
+    .mock { background:#fffdf6; color:#1d2a43; border-radius:18px; padding:42px; margin-top:45px; }
+    .line { height:18px; background:#dce1e8; border-radius:8px; margin:24px 0; }
+    .highlight { height:30px; background:#5fb236; opacity:.65; border-radius:8px; margin:24px 0; width:75%; }
+    .footer { position:absolute; left:92px; right:92px; bottom:70px; color:#aebee5; font-size:22px; }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="card" id="00-cover"><span class="pill">OPEN-SOURCE · SYNTHETIC DEMO</span><h1 style="margin-top:88px">让 Zotero 批注<br>从“看过”变成<br>“可复核”</h1><p>完整阅读 · 精确定位 · 原生高亮</p><div class="footer">Zotero AI Reader · community project · no private paper data</div></section>
+    <section class="card" id="01-problem"><h2>问题：摘要不等于全文</h2><p>只看 Abstract，容易漏掉正文里的方法、实验、限制和反例。</p><div class="mock"><div class="line"></div><div class="line"></div><div class="line" style="width:84%"></div><div class="highlight"></div><div class="line"></div><div class="line" style="width:90%"></div><div class="line"></div></div><p>先覆盖全文，再决定是否写入。</p><div class="footer">示意页面为虚构内容，不含论文截图。</div></section>
+    <section class="card" id="02-result"><h2>结果：写入前先过三道门</h2><ol><li>完整页面覆盖与章节记录</li><li>原文 exact quote 精确匹配</li><li>唯一结果 + 坐标 + sortIndex</li></ol><p class="pill">重复文本不会静默选第一个</p><div class="footer">可复核比“看起来完成”更重要。</div></section>
+    <section class="card" id="03-how-it-works"><h2>怎么做到的？</h2><ol><li>读取 Zotero 已安装的 PDF.js</li><li>保留 Reader 的字符与空格语义</li><li>从字符几何合成原生 rects</li><li>最后才调用 Zotero 原生保存路径</li></ol><div class="footer">后台处理，不依赖鼠标、键盘或前台 PDF 标签。</div></section>
+    <section class="card" id="04-full-paper"><h2>全文优先</h2><p>purpose / gap / method / result</p><div class="mock"><div class="line"></div><div class="line" style="width:90%"></div><div class="highlight" style="width:65%"></div><div class="line" style="width:88%"></div><div class="line" style="width:74%"></div><div class="highlight" style="background:#2ea8e5;width:82%"></div><div class="line" style="width:92%"></div></div><p>每个证据单元带原文、页码、章节和中文摘要。</p><div class="footer">颜色只是分类提示，不替代研究判断。</div></section>
+    <section class="card" id="05-features"><h2>核心能力</h2><ul><li>Background PDF.js extraction</li><li>UTF-16 aware text mapping</li><li>Multi-line geometry</li><li>Context disambiguation</li><li>Duplicate protection</li><li>JSONL resume/audit</li></ul><div class="footer">Node.js · Zotero 9.0.6 · local bridge</div></section>
+    <section class="card" id="06-safety"><h2>安全边界</h2><ul><li>不直接修改 zotero.sqlite</li><li>不上传 PDF 到项目</li><li>不使用 OCR 或外部 PDF 解析器</li><li>不执行 GUI 自动化</li><li>写入前先 dry-run</li></ul><div class="footer">Native write 仍会改变你的 Zotero 库，请先备份。</div></section>
+    <section class="card" id="07-use"><h2>三步开始</h2><ol><li>安装 Zotero 与本地 bridge</li><li>运行 doctor + dry-run</li><li>人工确认后再 --apply</li></ol><pre style="font-size:25px;color:#b9fff0;background:#0b1020;padding:28px;border-radius:16px;white-space:pre-wrap">node src/doctor.mjs --json
+node src/annotate.mjs --plan analysis.json
+node src/annotate.mjs --plan analysis.json --apply</pre><div class="footer">Windows-first public release · exact versions in README.</div></section>
+    <section class="card" id="08-open-source"><h2>开源发布</h2><p>MIT License · clean public history · synthetic assets</p><p>欢迎反馈：定位正确性、覆盖门、边界案例。</p><p class="pill">GitHub link will be inserted after publication</p><div class="footer">Independent community project · not official Zotero/OpenAI.</div></section>
+  </main>
+</body>
+</html>

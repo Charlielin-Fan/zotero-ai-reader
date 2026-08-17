@@ -1,0 +1,16 @@
+{
+  "name": "zotero-ai-reader",
+  "version": "0.1.0",
+  "description": "Local-first full-paper evidence annotation for Zotero",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test --test-concurrency=1",
+    "extract": "node src/extract.mjs",
+    "locate": "node src/locator.mjs",
+    "annotate": "node src/annotate.mjs",
+    "run": "node src/run.mjs",
+    "doctor": "node src/doctor.mjs"
+  }
+}

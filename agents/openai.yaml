@@ -1,0 +1,7 @@
+interface:
+  display_name: "Zotero AI Reader"
+  short_description: "Full-paper Zotero evidence annotation"
+  default_prompt: "Use $zotero-ai-reader to inspect each complete Zotero paper, verify coverage, and annotate with the default four-category evidence scheme."
+
+policy:
+  allow_implicit_invocation: true
