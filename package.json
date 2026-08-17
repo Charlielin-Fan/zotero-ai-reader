@@ -1,6 +1,6 @@
 {
   "name": "zotero-ai-reader",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Local-first full-paper evidence annotation for Zotero",
   "license": "MIT",
   "private": true,

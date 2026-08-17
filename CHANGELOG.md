@@ -5,6 +5,10 @@ Keep a Changelog; releases use semantic version labels.
 
 ## [Unreleased]
 
+No unreleased changes yet.
+
+## [0.2.0] - 2026-08-17
+
 ### Added
 
 - Evidence-grounded Paper Model reconstruction and provisional section observations.
