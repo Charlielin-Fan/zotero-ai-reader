@@ -182,13 +182,14 @@ function planEntries(rawPlan) {
 }
 
 function hasAnalysisPayload(plan) {
-  const source = plan?.analysis && typeof plan.analysis === "object" ? plan.analysis : plan;
-  return Array.isArray(source?.annotations) || [
+  const sources = [plan?.annotation_plan, plan?.analysis, plan]
+    .filter(source => source && typeof source === "object");
+  return sources.some(source => Array.isArray(source.annotations) || [
     "research_purpose",
     "research_gap",
     "research_method",
     "research_result",
-  ].some(category => Array.isArray(source?.[category]));
+  ].some(category => Array.isArray(source[category])));
 }
 
 function indexPlans(rawPlan) {
@@ -352,6 +353,18 @@ export async function runCollection({
       totalPages: result.outcome?.coverage?.totalPages ?? null,
       pagesInspected: result.outcome?.coverage?.pagesInspected ?? null,
       coverageComplete: result.outcome?.coverage?.coverageComplete ?? false,
+      understandingComplete: result.outcome?.semantic?.understandingComplete ?? false,
+      annotationCoverageComplete: result.outcome?.annotationCoverage?.annotationCoverageComplete ?? false,
+      paperModelBuilt: result.outcome?.semantic?.paperModelBuilt ?? false,
+      methodSteps: result.outcome?.semantic?.methodSteps ?? 0,
+      methodStepsCovered: result.outcome?.annotationCoverage?.methodStepsCovered ?? 0,
+      keyResults: result.outcome?.annotationCoverage?.keyResults ?? 0,
+      keyResultsCovered: result.outcome?.annotationCoverage?.keyResultsCovered ?? 0,
+      requiredModelNodes: result.outcome?.annotationCoverage?.requiredNodeCount ?? 0,
+      requiredNodesCovered: result.outcome?.annotationCoverage?.requiredNodesCovered ?? 0,
+      requiredNodesSatisfied: result.outcome?.annotationCoverage?.requiredNodesSatisfied ?? 0,
+      usefulNodesAnnotated: result.outcome?.annotationCoverage?.usefulNodesAnnotated ?? 0,
+      annotationDiagnostics: result.outcome?.annotationCoverage?.diagnostics ?? [],
       plannedAnnotations: plannedAnnotationCount(selected.plan),
       created: result.outcome?.writer?.created?.length ?? 0,
       alreadyExists: result.outcome?.writer?.already_exists?.length ?? 0,

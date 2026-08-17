@@ -66,3 +66,59 @@ test("multiple evidence units in one category preserve source metadata", () => {
     ],
   );
 });
+
+test("decomposition artifact can keep semantic model beside a nested annotation plan", () => {
+  const paperModel = { core_problem: { summary: "A problem", evidence_refs: [] } };
+  const plan = normalizeAnalysisPlan({
+    attachmentKey: "ATTACHMENT",
+    paper_model: paperModel,
+    understanding: { understandingComplete: false },
+    annotation_plan: {
+      research_purpose: [{
+        exact_quote: "Objective evidence",
+        summary_zh: "目标",
+        paper_model_ref: "core_problem",
+        semantic_role: "objective_evidence",
+      }],
+      research_gap: [],
+      research_method: [],
+      research_result: [],
+    },
+  });
+  assert.equal(plan.annotations.length, 1);
+  assert.equal(plan.paperModel.core_problem.summary, "A problem");
+  assert.equal(plan.annotations[0].paperModelRef, "core_problem");
+  assert.equal(plan.annotations[0].semanticRole, "objective_evidence");
+});
+
+test("normalized plans preserve multi-node coverage references and gate metadata", () => {
+  const plan = normalizeAnalysisPlan({
+    attachmentKey: "ATTACHMENT",
+    paper_model: {
+      method_pipeline: [{
+        step: 1,
+        name: "Stage",
+        input: "input",
+        operation: "operation",
+        output: "output",
+        why_needed: "reason",
+        annotation_priority: "required",
+      }],
+    },
+    annotation_coverage: {
+      nodes: {
+        "method_pipeline.0": { status: "covered", annotation_indices: [0] },
+      },
+    },
+    annotations: [{
+      category: "research_method",
+      exact_quote: "One continuous passage",
+      summary_zh: "一个连续段落覆盖两个相关阶段。",
+      paper_model_refs: ["method_pipeline.0", "method_pipeline.step_1"],
+      semantic_role: "major_method_stage",
+    }],
+  });
+  assert.deepEqual(plan.annotations[0].paperModelRefs, ["method_pipeline.0", "method_pipeline.step_1"]);
+  assert.equal(plan.annotations[0].paperModelRef, "method_pipeline.0");
+  assert.equal(plan.annotationCoverage.nodes["method_pipeline.0"].status, "covered");
+});
